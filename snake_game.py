@@ -1,6 +1,7 @@
-import pygame
 import random
 import sys
+
+import pygame
 
 # Konstanta layar dan permainan
 SCREEN_WIDTH, SCREEN_HEIGHT = 600, 400
@@ -27,6 +28,7 @@ OPPOSITE = {
     RIGHT: LEFT,
 }
 
+
 def random_food_position(snake_body):
     """Menghasilkan posisi makanan yang rata dengan grid dan tidak menimpa tubuh ular."""
     cols = SCREEN_WIDTH // BLOCK_SIZE
@@ -46,6 +48,7 @@ def random_food_position(snake_body):
     fx, fy = random.choice(free_cells)
     return fx * BLOCK_SIZE, fy * BLOCK_SIZE
 
+
 def draw_grid(surface):
     """Gambar grid opsional untuk memudahkan visualisasi."""
     for x in range(0, SCREEN_WIDTH, BLOCK_SIZE):
@@ -53,18 +56,22 @@ def draw_grid(surface):
     for y in range(0, SCREEN_HEIGHT, BLOCK_SIZE):
         pygame.draw.line(surface, GRAY, (0, y), (SCREEN_WIDTH, y), 1)
 
+
 def draw_snake(surface, snake_body):
-    for (x, y) in snake_body:
+    for x, y in snake_body:
         pygame.draw.rect(surface, WHITE, pygame.Rect(x, y, BLOCK_SIZE, BLOCK_SIZE))
+
 
 def draw_food(surface, food_pos):
     if food_pos is not None:
         fx, fy = food_pos
         pygame.draw.rect(surface, RED, pygame.Rect(fx, fy, BLOCK_SIZE, BLOCK_SIZE))
 
+
 def draw_score(surface, font, score):
     text = font.render(f"Skor: {score}", True, GREEN)
     surface.blit(text, (10, 10))
+
 
 def game_loop(screen, clock, font):
     # Inisialisasi ular: panjang awal 3, arah awal ke kanan
@@ -149,12 +156,15 @@ def game_loop(screen, clock, font):
         draw_score(screen, font, score)
 
         if game_over:
-            over_text = font.render("Game Over - Tekan R untuk Restart atau Esc untuk Keluar", True, WHITE)
+            over_text = font.render(
+                "Game Over - Tekan R untuk Restart atau Esc untuk Keluar", True, WHITE
+            )
             rect = over_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2))
             screen.blit(over_text, rect)
 
         pygame.display.flip()
         clock.tick(FPS)
+
 
 def main():
     pygame.init()
@@ -171,6 +181,7 @@ def main():
 
     pygame.quit()
     sys.exit()
+
 
 if __name__ == "__main__":
     main()
